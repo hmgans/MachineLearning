@@ -10,4 +10,7 @@ def entropy(PropPos):
     return -PropPos * math.log2(PropPos) - PropNeg * math.log2(PropNeg)
 
 
-print(entropy(9/14))
+
+
+
+print(entropy(5/14))
