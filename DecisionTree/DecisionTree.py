@@ -4,6 +4,7 @@
 import math
 import pandas as pd
 from pandas.core.base import NoNewAttributesMixin
+from fractions import Fraction
 
 df = pd.read_csv("TesterDT.csv", header=None)
 
@@ -13,9 +14,10 @@ labels = []
 for i in range(length):
     labels.append("col" + str(i))
 
-print(labels)
+#print(labels)
 df.columns = labels
-print(df.loc[df['col1'] > 0])
+#print(df.loc[df['col1'] > 0])
+#print(df.col1.unique())
 
 
 def entropy(PropPos):
@@ -28,5 +30,6 @@ def giniIndex(PropPos):
 
 def decisionTree(filename, columnName, positiveIndicator):
     return 0
+    
 
-print( giniIndex(.25) )
+print(entropy(2/5))
