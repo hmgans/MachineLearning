@@ -378,7 +378,7 @@ def test_data(tree, test, label):
     for i in range(len(test)):
         line = pd.Series(test.iloc[i])
         insideArray = []
-        insideArray.append(predict(line, tree))
+        insideArray.append(find_result(line, tree))
         array.append(insideArray)
 
     newCheckArray = pd.DataFrame(np.array(array))
