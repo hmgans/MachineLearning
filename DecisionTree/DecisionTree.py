@@ -473,11 +473,11 @@ test = pd.read_csv("car/train.csv", header=None)
 # df = cleanNumbericalValues(df)
 # test = cleanNumbericalValues(test)
 
-# length = df.loc[0].size
-# labels = []
+length = df.loc[0].size
+labels = []
 
-# for i in range(length):
-#     labels.append("col" + str(i))
+for i in range(length):
+    labels.append("col" + str(i))
 
 
 
