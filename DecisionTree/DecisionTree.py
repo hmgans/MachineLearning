@@ -458,7 +458,7 @@ def cleanUnknownValues(df):
 
 df = pd.read_csv("bank/train.csv", header=None)
 
-test = pd.read_csv("bank/train.csv", header=None)
+test = pd.read_csv("bank/test.csv", header=None)
 
 df = cleanNumbericalValues(df)
 test = cleanNumbericalValues(test)
