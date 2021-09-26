@@ -472,7 +472,7 @@ test = pd.read_csv("bank/train.csv", header=None)
 df = cleanNumbericalValues(df)
 test = cleanNumbericalValues(test)
 
-length = df.loc[0].sizes
+length = df.loc[0].size
 labels = []
 
 for i in range(length):
