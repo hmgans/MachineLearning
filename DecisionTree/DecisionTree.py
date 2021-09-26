@@ -517,18 +517,18 @@ for i in range(6):
     print("Results for GI")
     for label in labels:
         tree = constructTree(df, label, i, 'GI')
-        print(label+ ": results-" + test_data(tree, test, label)+"\\\\")
+        print(label+ ": results-" + str(test_data(tree, test, label))+"\\\\")
 
     print("Results for ME")
     for label in labels:
         tree = constructTree(df, label, i, 'ME')
-        print(label+ ": results-" + test_data(tree, test, label)+"\\\\")
+        print(label+ ": results-" + str(test_data(tree, test, label))+"\\\\")
 
 
     print("Results for Info Gain")
     for label in labels:
         tree = constructTree(df, label, i, 'IG')
-        print(label+ ": results-" + test_data(tree, test, label)+"\\\\")
+        print(label+ ": results-" + str(test_data(tree, test, label))+"\\\\")
 
 
 
