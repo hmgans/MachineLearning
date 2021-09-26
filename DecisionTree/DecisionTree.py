@@ -465,7 +465,6 @@ def cleanUnknownValues(df):
 
 
     return 0 
-
 df = pd.read_csv("car/train.csv", header=None)
 
 test = pd.read_csv("car/test.csv", header=None)
@@ -518,19 +517,18 @@ for i in range(6):
     print("Results for GI")
     for label in labels:
         tree = constructTree(df, label, i, 'GI')
-        print(label+ ": results")
-        print(test_data(tree, test, label))
+        print(label+ ": results-" + test_data(tree, test, label)+"\\\\")
 
     print("Results for ME")
     for label in labels:
         tree = constructTree(df, label, i, 'ME')
-        print(label+ ": results")
-        print(test_data(tree, test, label))
+        print(label+ ": results-" + test_data(tree, test, label)+"\\\\")
+
 
     print("Results for Info Gain")
     for label in labels:
         tree = constructTree(df, label, i, 'IG')
-        print(label+ ": results")
-        print(test_data(tree, test, label))
+        print(label+ ": results-" + test_data(tree, test, label)+"\\\\")
+
 
 
