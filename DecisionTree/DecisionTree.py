@@ -528,40 +528,40 @@ for i in range(length):
 #     for label in labels:
 #         tree = constructTree(df, label, i, 'IG')
 #         print(label+ ": results-" + str(test_data(tree, test, label))+"\\\\")
+#
+# print("Tests with unknown counting as a value \\\\")
+# for i in range(1,7):
+#     print("Tree Depth \\\\")
+#     print(str(i)+ "\\\\")
 
-print("Tests with unknown counting as a value \\\\")
-for i in range(1,7):
-    print("Tree Depth \\\\")
-    print(str(i)+ "\\\\")
+#     test = pd.read_csv("bank/train.csv", header=None)
+#     test = cleanNumbericalValues(test)
 
-    test = pd.read_csv("bank/train.csv", header=None)
-    test = cleanNumbericalValues(test)
+#     print('Against Training Data \\\\')
+#     tree = constructTree(df, 'col6', i, 'GI')
+#     print('GI - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
+#     tree = constructTree(df, 'col6', i, 'ME')
+#     print('ME - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
+#     tree = constructTree(df, 'col6', i, 'IG')
+#     print('IG - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
 
-    print('Against Training Data \\\\')
-    tree = constructTree(df, 'col6', i, 'GI')
-    print('GI - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'ME')
-    print('ME - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'IG')
-    print('IG - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
+#     test = pd.read_csv("bank/test.csv", header=None)
+#     test = cleanNumbericalValues(test)
 
-    test = pd.read_csv("bank/test.csv", header=None)
-    test = cleanNumbericalValues(test)
-
-    print('Against Testing Data\\\\')
-    tree = constructTree(df, 'col6', i, 'GI')
-    print('GI - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'ME')
-    print('ME - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'IG')
-    print('IG - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
+#     print('Against Testing Data\\\\')
+#     tree = constructTree(df, 'col6', i, 'GI')
+#     print('GI - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
+#     tree = constructTree(df, 'col6', i, 'ME')
+#     print('ME - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
+#     tree = constructTree(df, 'col6', i, 'IG')
+#     print('IG - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
 
 
 df = cleanUnknownValues(df)
 test = cleanUnknownValues(test)
 
 print("Tests with unknown being replaced with majority")
-for i in range(1,7):
+for i in range(1,5):
 
     test = pd.read_csv("bank/train.csv", header=None)
     test = cleanNumbericalValues(test)
