@@ -532,7 +532,7 @@ for i in range(length):
 print("Values with unknown counting as a value")
 for i in range(6):
     print("Tree Depth \\\\")
-    print("i\\\\")
+    print(i+ "\\\\")
 
     print('Against Training Data \\\\')
     tree = constructTree(df, 'col6', i, 'GI')
