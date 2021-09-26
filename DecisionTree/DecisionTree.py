@@ -554,9 +554,9 @@ df = cleanUnknownValues(df)
 test = cleanUnknownValues(test)
 
 print("Values with unknown being replaced with majority")
-for i in range(6):
+for i in range(12):
     print("Tree Depth \\\\")
-    print("i\\\\")
+    print(i+"\\\\")
 
     print('Against Training Data \\\\')
     tree = constructTree(df, 'col6', i, 'GI')
