@@ -224,7 +224,11 @@ def get_all_same(df, labelName, gainType):
 def get_subtable(df, node,value):
   return df[df[node] == value].reset_index(drop=True)
 
-
+# Builds a decision Tree
+# df - dataframe to use
+# labelName - label to use or column, 'col1', 'col2'
+# height - input as 0 to start
+# gainType - "ME" - Majority Error, "IG" -information gain, or "GI" - gini index
 def buildTree(df, labelName, height, limit, gainType, tree=None): 
     
     newNode = get_highest_IG(df, labelName, gainType)
@@ -280,7 +284,9 @@ def buildTree(df, labelName, height, limit, gainType, tree=None):
 
 
 
-
+# Constructs a tree
+# df - dataframe to use
+# targetColumn - column you want to predict "col1", "col2", etc.
 def constructTree(df, targetColumn, limit, gainType):
     length = df.loc[0].size
     labels = []
@@ -308,6 +314,7 @@ def constructTree(df, targetColumn, limit, gainType):
 
     return tree
 
+# Used in testing 
 def create_test_frame(df, targetColumn):
     length = df.loc[0].size
     labels = []
@@ -330,10 +337,8 @@ def create_test_frame(df, targetColumn):
 
     return data
 
-def predict(inst,tree):
-    #This function is used to predict for any input variable 
-    
-    #Recursively we go through the tree that we built earlier
+# recusively find the result 
+def find_result(inst,tree):
 
     for nodes in tree.keys():        
         
@@ -346,7 +351,7 @@ def predict(inst,tree):
         prediction = 0
             
         if type(tree) is dict:
-            prediction = predict(inst, tree)
+            prediction = find_result(inst, tree)
         else:
             prediction = tree
             break;                            
@@ -357,7 +362,10 @@ def predict(inst,tree):
 
 
 
-#Time to test the data 
+#This function wwill test the data once the decision tree is made
+# tree - decision tree
+# test - dataframe for test
+# label - column you want to test, 'col1', 'col2' etc.
 def test_data(tree, test, label):
 
     
@@ -388,6 +396,7 @@ def test_data(tree, test, label):
     hits = len(testCol['hits'][testCol['hits']==True])
     return hits/total
 
+# This will convert numerical values to a + or - baased on the median.
 def cleanNumbericalValues(df):
     length = df.loc[0].size
     labels = []
@@ -419,6 +428,7 @@ def cleanNumbericalValues(df):
 
     return df
 
+#This function with replac unknown values in the dataframe with the majority 
 def cleanUnknownValues(df):
     length = df.loc[0].size
     labels = []
@@ -472,15 +482,15 @@ for i in range(length):
 
 
 print("Results for GI with unknown")
-tree = constructTree(df, labels[-1], 6, 'GI')
+tree = constructTree(df, labels[-1], 16, 'GI')
 print(test_data(tree, test, labels[-1]))
 
 print("Results for GI with unknown")
-tree = constructTree(df, labels[-1], 6, 'ME')
+tree = constructTree(df, labels[-1], 16, 'ME')
 print(test_data(tree, test, labels[-1]))
 
 print("Results for GI with unknown")
-tree = constructTree(df, labels[-1], 6, 'IG')
+tree = constructTree(df, labels[-1], 16, 'IG')
 print(test_data(tree, test, labels[-1]))
 
 df = cleanUnknownValues(df)
