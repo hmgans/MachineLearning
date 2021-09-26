@@ -472,30 +472,30 @@ for i in range(length):
 
 
 print("Results for GI with unknown")
-tree = constructTree(df, labels[-1], 16, 'GI')
+tree = constructTree(df, labels[-1], 6, 'GI')
 print(test_data(tree, test, labels[-1]))
 
 print("Results for GI with unknown")
-tree = constructTree(df, labels[-1], 16, 'ME')
+tree = constructTree(df, labels[-1], 6, 'ME')
 print(test_data(tree, test, labels[-1]))
 
 print("Results for GI with unknown")
-tree = constructTree(df, labels[-1], 16, 'IG')
+tree = constructTree(df, labels[-1], 6, 'IG')
 print(test_data(tree, test, labels[-1]))
 
 df = cleanUnknownValues(df)
 test = cleanUnknownValues(test)
 
 print("Results for GI replacing unknown")
-tree = constructTree(df, labels[-1], 16, 'GI')
+tree = constructTree(df, labels[-1], 6, 'GI')
 print(test_data(tree, test, labels[-1]))
 
 print("Results for GI replacing unknown")
-tree = constructTree(df, labels[-1], 16, 'ME')
+tree = constructTree(df, labels[-1], 6, 'ME')
 print(test_data(tree, test, labels[-1]))
 
 print("Results for GI replacing unknown")
-tree = constructTree(df, labels[-1], 16, 'IG')
+tree = constructTree(df, labels[-1], 6, 'IG')
 print(test_data(tree, test, labels[-1]))
 
 
