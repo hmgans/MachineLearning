@@ -456,9 +456,9 @@ def cleanUnknownValues(df):
 
     return 0 
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/DecisionTree/bank/train.csv", header=None)
+df = pd.read_csv("bank/train.csv", header=None)
 
-test = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/DecisionTree/bank/train.csv", header=None)
+test = pd.read_csv("bank/train.csv", header=None)
 
 df = cleanNumbericalValues(df)
 test = cleanNumbericalValues(test)
