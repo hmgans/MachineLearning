@@ -571,11 +571,11 @@ for i in range(1,7):
     print(str(i)+"\\\\")
 
     print('Against Training Data \\\\')
-    tree = constructTree(df, 'col6', i, 'GI')
+    tree = constructTree(df, 'col16', i, 'GI')
     print('GI - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'ME')
+    tree = constructTree(df, 'col16', i, 'ME')
     print('ME - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'IG')
+    tree = constructTree(df, 'col16', i, 'IG')
     print('IG - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
 
     test = pd.read_csv("bank/test.csv", header=None)
@@ -583,10 +583,10 @@ for i in range(1,7):
     test = cleanUnknownValues(test)
 
     print('Against Testing Data\\\\')
-    tree = constructTree(df, 'col6', i, 'GI')
+    tree = constructTree(df, 'col16', i, 'GI')
     print('GI - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'ME')
+    tree = constructTree(df, 'col16', i, 'ME')
     print('ME - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
-    tree = constructTree(df, 'col6', i, 'IG')
+    tree = constructTree(df, 'col16', i, 'IG')
     print('IG - col6'+ ": results-" + str(test_data(tree, test, 'col6'))+"\\\\")
 
