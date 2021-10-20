@@ -1253,7 +1253,49 @@ dfTest = cleanNumbericalValues(dfTest)
 #testEnsemble(trees, dfTest, 'col16', alphas)
 
 #2.b
-baggedTrees = constructBaggedTree(df, 'col16', 0, 'IG', 10)
+# baggedTrees = constructBaggedTree(df, 'col16', 0, 'IG', 10)
+
+# x, y = testTrees(baggedTrees, df, 'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
+ 
+# # giving a title to my graph
+# plt.title('Bagged Trees Individual')
+# # function to show the plot
+# plt.show()
+
+
+# x, y = testGroupDecision(baggedTrees,df,'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
+ 
+# # giving a title to my graph
+# plt.title('Bagged Trees Ensemble')
+# # function to show the plot
+# plt.show()
+
+#Results against test
+# testTrees(baggedTrees, dfTest, 'col16')
+# testGroupDecision(baggedTrees,dfTest,'col16')
+
+
+
+#2.c
+#totalBags = []
+#for i in range(100):
+    #newSample = GetSamplesWithoutReplacement(1000, df)
+    #baggedTrees = constructBaggedTree(newSample, 'col16', 0, 'IG', 500)
+    #totalBags.append(baggedTrees)
+
+
+#2.d
+randomForest = constructRandomForestTree(df, 'col16', 0, 'IG', 10)
 
 x, y = testTrees(baggedTrees, df, 'col16')
 plt.plot(x, y)
@@ -1279,25 +1321,6 @@ plt.ylabel('Error')
 plt.title('Bagged Trees Ensemble')
 # function to show the plot
 plt.show()
-
-#Results against test
-# testTrees(baggedTrees, dfTest, 'col16')
-# testGroupDecision(baggedTrees,dfTest,'col16')
-
-
-
-#2.c
-#totalBags = []
-#for i in range(100):
-    #newSample = GetSamplesWithoutReplacement(1000, df)
-    #baggedTrees = constructBaggedTree(newSample, 'col16', 0, 'IG', 500)
-    #totalBags.append(baggedTrees)
-
-
-#2.d
-#baggedTrees = constructRandomForestTree(df, 'col16', 0, 'IG', 1)
-
-
 
 
 
