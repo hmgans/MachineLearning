@@ -354,7 +354,7 @@ def find_result(inst,tree):
             prediction = find_result(inst, tree)
         else:
             prediction = tree
-            break;                            
+            break;                           
         
     return prediction
 
