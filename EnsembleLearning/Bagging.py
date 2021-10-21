@@ -1243,182 +1243,134 @@ df = cleanNumbericalValues(df)
 dfTest = cleanNumbericalValues(dfTest)
 
 
-#tree = constructTree(df, 'col16', 0, 'IG')
-#2.a 
-#Get all trees and their alpha values
-trees, alphas = constructAdaTree(df, 'col16', 0, 'IG', 500)
-#Results against training 
-x, y = testTrees(trees, df, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
+# #tree = constructTree(df, 'col16', 0, 'IG')
+# #2.a 
+# #Get all trees and their alpha values
+# trees, alphas = constructAdaTree(df, 'col16', 0, 'IG', 500)
+# #Results against training 
+# x, y = testTrees(trees, df, 'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
  
-# giving a title to my graph
-plt.title('AdaBoost Individual on Training')
-# function to show the plot
-plt.show()
+# # giving a title to my graph
+# plt.title('AdaBoost Individual on Training')
+# # function to show the plot
+# plt.show()
 
-x, y = testEnsemble(trees, df, 'col16', alphas)
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
+# x, y = testEnsemble(trees, df, 'col16', alphas)
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
  
-# giving a title to my graph
-plt.title('AdaBoost Ensemble on Training')
-# function to show the plot
-plt.show()
+# # giving a title to my graph
+# plt.title('AdaBoost Ensemble on Training')
+# # function to show the plot
+# plt.show()
 
-#Results against Test
-x, y = testTrees(trees, dfTest, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
+# #Results against Test
+# x, y = testTrees(trees, dfTest, 'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
  
-# giving a title to my graph
-plt.title('AdaBoost Individual on Test')
-# function to show the plot
-plt.show()
+# # giving a title to my graph
+# plt.title('AdaBoost Individual on Test')
+# # function to show the plot
+# plt.show()
 
-x, y = testEnsemble(trees, dfTest, 'col16', alphas)
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
-# giving a title to my graph
-plt.title('AdaBoost Ensemble on Test')
-# function to show the plot
-plt.show()
-
-
-#Results against test
-#testTrees(trees, dfTest, 'col16')
-#testEnsemble(trees, dfTest, 'col16', alphas)
-
-#2.b #BAGGED TREES
+# x, y = testEnsemble(trees, dfTest, 'col16', alphas)
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
+# # giving a title to my graph
+# plt.title('AdaBoost Ensemble on Test')
+# # function to show the plot
+# plt.show()
 
 
-baggedTrees = constructBaggedTree(df, 'col16', 4, 'IG', 500)
+# #Results against test
+# #testTrees(trees, dfTest, 'col16')
+# #testEnsemble(trees, dfTest, 'col16', alphas)
 
-x, y = testTrees(baggedTrees, df, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
+# #2.b #BAGGED TREES
+
+
+
+
+# #Results against test
+# # testTrees(baggedTrees, dfTest, 'col16')
+# # testGroupDecision(baggedTrees,dfTest,'col16')
+
+
+
+# #2.c
+# # totalBags = []
+# # for i in range(100):
+# #     newSample = GetSamplesWithoutReplacement(1000, df)
+# #     baggedTrees = constructBaggedTree(newSample, 'col16', 0, 'IG', 100)
+# #     totalBags.append(baggedTrees)
+
+
+
+# #2.d
+# randomForest = constructRandomForestTree(df, 'col16', 4, 'IG', 500)
+
+# x, y = testTrees(randomForest, df, 'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
  
-# giving a title to my graph
-plt.title('Bagged Tree Individual on Training')
-# function to show the plot
-plt.show()
+# # giving a title to my graph
+# plt.title('Random Forest Individual on Training')
+# # function to show the plot
+# plt.show()
 
-x, y = testGroupDecision(baggedTrees, df, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
+# x, y = testGroupDecision(randomForest, df, 'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
  
-# giving a title to my graph
-plt.title('Bagged Tree Ensemble on Training')
-# function to show the plot
-plt.show()
+# # giving a title to my graph
+# plt.title('Random Forest Ensemble on Training')
+# # function to show the plot
+# plt.show()
 
-#Results against Test
-x, y = testTrees(baggedTrees, dfTest, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
+# #Results against Test
+# x, y = testTrees(randomForest, dfTest, 'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
  
-# giving a title to my graph
-plt.title('Bagged Tree Individual on Test')
-# function to show the plot
-plt.show()
+# # giving a title to my graph
+# plt.title('Random Forest Individual on Test')
+# # function to show the plot
+# plt.show()
 
-x, y = testGroupDecision(baggedTrees, dfTest, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
-# giving a title to my graph
-plt.title('Bagged Tree Ensemble on Test')
-# function to show the plot
-plt.show()
-
-#Results against test
-# testTrees(baggedTrees, dfTest, 'col16')
-# testGroupDecision(baggedTrees,dfTest,'col16')
-
-
-
-#2.c
-# totalBags = []
-# for i in range(100):
-#     newSample = GetSamplesWithoutReplacement(1000, df)
-#     baggedTrees = constructBaggedTree(newSample, 'col16', 0, 'IG', 100)
-#     totalBags.append(baggedTrees)
-
-
-
-#2.d
-randomForest = constructRandomForestTree(df, 'col16', 4, 'IG', 500)
-
-x, y = testTrees(randomForest, df, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
- 
-# giving a title to my graph
-plt.title('Random Forest Individual on Training')
-# function to show the plot
-plt.show()
-
-x, y = testGroupDecision(randomForest, df, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
- 
-# giving a title to my graph
-plt.title('Random Forest Ensemble on Training')
-# function to show the plot
-plt.show()
-
-#Results against Test
-x, y = testTrees(randomForest, dfTest, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
- 
-# giving a title to my graph
-plt.title('Random Forest Individual on Test')
-# function to show the plot
-plt.show()
-
-x, y = testGroupDecision(randomForest, dfTest, 'col16')
-plt.plot(x, y)
-# naming the x axis
-plt.xlabel('Iteration')
-# naming the y axis
-plt.ylabel('Error')
-# giving a title to my graph
-plt.title('Random Forest Ensemble on Test')
-# function to show the plot
-plt.show()
+# x, y = testGroupDecision(randomForest, dfTest, 'col16')
+# plt.plot(x, y)
+# # naming the x axis
+# plt.xlabel('Iteration')
+# # naming the y axis
+# plt.ylabel('Error')
+# # giving a title to my graph
+# plt.title('Random Forest Ensemble on Test')
+# # function to show the plot
+# plt.show()
 
 
 
