@@ -11,7 +11,7 @@ import numpy as np
 
 def gradientDecentMethod(df, targetColumn, r, t_limit):
 
-    length = df.loc[0].size
+    
     labels = []
     iter = 0
     treeCount = {}
@@ -22,7 +22,10 @@ def gradientDecentMethod(df, targetColumn, r, t_limit):
     for i in range(len(df)):
         columnOfOnes.append(1)
         
+    # Column of ones for the B value
+    
     df['colOnes'] = columnOfOnes
+    length = df.loc[0].size
 
 
 
