@@ -1215,7 +1215,6 @@ def testGroupDecision(trees, df, testCol):
         x.append(w+1)
         y.append(err)
         
-        print("Group Decision at "+ str(w+1) + ':' + str(err))
 
     return x, y
 
@@ -1296,7 +1295,7 @@ dfTest = cleanNumbericalValues(dfTest)
 
 
 #2.d
-randomForest = constructRandomForestTree(df, 'col16', 0, 'IG', 10)
+randomForest = constructRandomForestTree(df, 'col16', 16, 'IG', 1)
 
 x, y = testTrees(randomForest, df, 'col16')
 plt.plot(x, y)
