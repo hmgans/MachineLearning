@@ -1234,13 +1234,13 @@ def GetSamplesWithoutReplacement(total, data):
 
     return newDataFrame
 
-# df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
-# dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
+df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
+dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
 
-# #test = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
+#test = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
 
-# df = cleanNumbericalValues(df)
-# dfTest = cleanNumbericalValues(dfTest)
+df = cleanNumbericalValues(df)
+dfTest = cleanNumbericalValues(dfTest)
 
 
 # #tree = constructTree(df, 'col16', 0, 'IG')
@@ -1322,31 +1322,9 @@ def GetSamplesWithoutReplacement(total, data):
 
 
 # #2.d
-# randomForest = constructRandomForestTree(df, 'col16', 4, 'IG', 500)
+# randomForest = constructRandomForestTree(df, 'col16', 0, 'IG', 2)
 
-# x, y = testTrees(randomForest, df, 'col16')
-# plt.plot(x, y)
-# # naming the x axis
-# plt.xlabel('Iteration')
-# # naming the y axis
-# plt.ylabel('Error')
- 
-# # giving a title to my graph
-# plt.title('Random Forest Individual on Training')
-# # function to show the plot
-# plt.show()
 
-# x, y = testGroupDecision(randomForest, df, 'col16')
-# plt.plot(x, y)
-# # naming the x axis
-# plt.xlabel('Iteration')
-# # naming the y axis
-# plt.ylabel('Error')
- 
-# # giving a title to my graph
-# plt.title('Random Forest Ensemble on Training')
-# # function to show the plot
-# plt.show()
 
 # #Results against Test
 # x, y = testTrees(randomForest, dfTest, 'col16')

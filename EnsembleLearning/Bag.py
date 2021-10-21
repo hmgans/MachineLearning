@@ -11,11 +11,16 @@ from pandas.core.frame import DataFrame
 
 import Bagging
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
-dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
+df = pd.read_csv("bank/train.csv", header=None)
+dfTest = pd.read_csv("bank/test.csv", header=None)
 
 
-baggedTrees = Bagging.constructBaggedTree(df, 'col16', 4, 'IG', 500)
+df = Bagging.cleanNumbericalValues(df)
+dfTest = Bagging.cleanNumbericalValues(dfTest)
+
+
+
+baggedTrees = Bagging.constructBaggedTree(df, 'col16', 3, 'IG', 3)
 
 x, y = Bagging.testTrees(baggedTrees, df, 'col16')
 plt.plot(x, y)

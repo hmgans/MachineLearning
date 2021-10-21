@@ -17,13 +17,14 @@ df = pd.read_csv("bank/train.csv", header=None)
 dfTest = pd.read_csv("bank/test.csv", header=None)
 
 
-
+df = Bagging.cleanNumbericalValues(df)
+dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 
 #2.a 
 #Get all trees and their alpha values
-trees, alphas = Bagging.constructAdaTree(df, 'col16', 0, 'IG', 500)
+trees, alphas = Bagging.constructAdaTree(df, 'col16', 0, 'IG', 2)
 #Results against training 
 x, y = Bagging.testTrees(trees, df, 'col16')
 plt.plot(x, y)
