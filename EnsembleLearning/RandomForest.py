@@ -21,7 +21,7 @@ dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 #2.d
-randomForest = Bagging.constructRandomForestTree(df, 'col16', 3, 'IG', 3)
+randomForest = Bagging.constructRandomForestTree(df, 'col16', 3, 'IG', 500)
 
 x, y = Bagging.testTrees(randomForest, df, 'col16')
 plt.plot(x, y)

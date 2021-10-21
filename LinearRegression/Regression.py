@@ -4,18 +4,20 @@
 import math
 import pandas as pd
 import numpy as np
+import random
 
 
 
 
 
-def gradientDecentMethod(df, targetColumn, r, t_limit):
+def gradientDecentMethod(df, r, t_limit):
 
     
     labels = []
     iter = 0
     treeCount = {}
     trees = {}
+    switchColumn = 'col3'
     # Add a collumn of ones for the b value
 
     columnOfOnes = []
@@ -23,7 +25,7 @@ def gradientDecentMethod(df, targetColumn, r, t_limit):
         columnOfOnes.append(1)
         
     # Column of ones for the B value
-    
+
     df['colOnes'] = columnOfOnes
     length = df.loc[0].size
 
@@ -37,13 +39,13 @@ def gradientDecentMethod(df, targetColumn, r, t_limit):
 
 
 
-    newCol = df[targetColumn]
+    newCol = df[switchColumn]
 
-    data = df.drop(targetColumn, axis=1)
+    data = df.drop(switchColumn, axis=1)
 
 
 
-    data[targetColumn] = newCol
+    data[switchColumn] = newCol
 
     data.columns = labels
 
@@ -51,14 +53,16 @@ def gradientDecentMethod(df, targetColumn, r, t_limit):
     for i in range(length-1):
         w.append(0)
 
-    find_linear_regression(df, w, r, 0, t_limit, targetColumn)
+    w = [-1,1,-1,-1]
+
+    find_linear_regression_batch(data, w, r, 0, t_limit, 'col4')
 
 
 
 
     return 0
 
-def find_linear_regression(df, w, r, t, t_limit, target):
+def find_linear_regression_batch(df, w, r, t, t_limit, target):
 
     if(t == t_limit):
         return w
@@ -72,15 +76,43 @@ def find_linear_regression(df, w, r, t, t_limit, target):
     
     multiplicative = r *np.array(gradients)
     w = np.array(w) - multiplicative
-    return find_linear_regression(df, w, r, t+1,t_limit, target)
+    return find_linear_regression_batch(df, w, r, t+1,t_limit, target)
 
 
 
-    
+def find_linear_regression_stoch(df, w, r, t, t_limit, target):
 
-    
+    if(t == t_limit):
+        return w
 
-    return 0
+    #Randomly sample a training example
+    choice = random.randint(0, len(df)-1) # Get random index
+    example = df.iloc[choice]
+    #example = df.iloc[0]
+    temp = []
+
+    for i in range(len(w)):
+        temp.append(w[i])
+
+
+
+    for i in range(len(w)):
+        temp[i] = w[i] + r*(getResult(w, example,df.keys()[i], target))
+
+    w = temp
+
+    return find_linear_regression_batch(df, w, r, t+1,t_limit, target)
+
+
+
+def getResult(w, row, key, target):
+    result = 0
+    for j in range(len(df.keys())-1):
+         result += row[key]*w[j]
+        #(y - est)
+    result = row[target] - result
+    result *= row[key]
+    return result
 
 def batch(w, df):
 
@@ -99,6 +131,7 @@ def gradient(w, df, target, column):
         result = row[target] - estimate
         result = result*row[column]
         total += result
+    
     return -total
 
         
@@ -109,13 +142,58 @@ def gradient(w, df, target, column):
     return 0
 
 
-def stochasticGradientDescent(df, r):
+def stochasticGradientDescent(df, r, t_limit):
+    labels = []
+    iter = 0
+    treeCount = {}
+    trees = {}
+    switchColumn = 'col3'
+    # Add a collumn of ones for the b value
+
+    columnOfOnes = []
+    for i in range(len(df)):
+        columnOfOnes.append(1)
+        
+    # Column of ones for the B value
+
+    df['colOnes'] = columnOfOnes
+    length = df.loc[0].size
+
+
+
+
+    for i in range(length):
+        labels.append("col" + str(i))
+
+    df.columns = labels
+
+
+
+    newCol = df[switchColumn]
+
+    data = df.drop(switchColumn, axis=1)
+
+
+
+    data[switchColumn] = newCol
+
+    data.columns = labels
+
+    w = []
+    for i in range(length-1):
+        w.append(0)
+
+    find_linear_regression_stoch(data, w, r, 0, t_limit, 'col4')
+
+
 
     return 0
 
 
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/LinearRegression/concrete/train.csv", header=None)
+df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/LinearRegression/tester.csv", header=None)
 
 
-gradientDecentMethod(df, 'col7', .1, 10)
+gradientDecentMethod(df, .1, 100)
+
+stochasticGradientDescent(df, .1, 100)
