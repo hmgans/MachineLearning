@@ -1234,13 +1234,13 @@ def GetSamplesWithoutReplacement(total, data):
 
     return newDataFrame
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
-dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
+# df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
+# dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
 
-#test = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
+# #test = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
 
-df = cleanNumbericalValues(df)
-dfTest = cleanNumbericalValues(dfTest)
+# df = cleanNumbericalValues(df)
+# dfTest = cleanNumbericalValues(dfTest)
 
 
 # #tree = constructTree(df, 'col16', 0, 'IG')
