@@ -1295,7 +1295,7 @@ dfTest = cleanNumbericalValues(dfTest)
 
 
 #2.d
-randomForest = constructRandomForestTree(df, 'col16', 16, 'IG', 1)
+randomForest = constructRandomForestTree(df, 'col16', 2, 'IG', 2)
 
 x, y = testTrees(randomForest, df, 'col16')
 plt.plot(x, y)
