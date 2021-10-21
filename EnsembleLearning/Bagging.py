@@ -219,7 +219,7 @@ def get_highest_IG_RandomForest(df, labelName, gainType):
     size = opt[random_index]
     #Save the new Keys
     theNewKeys = []
-    if size > options:
+    if size > len(options):
         options = theNewKeys
     else:
         for i in range(size):
@@ -228,7 +228,7 @@ def get_highest_IG_RandomForest(df, labelName, gainType):
             selection = options[randomColumnIndex]
 
             theNewKeys.append(selection)
-            options.remove(selection)
+            options.delete(randomColumnIndex)
 
 
 
@@ -1287,17 +1287,18 @@ dfTest = cleanNumbericalValues(dfTest)
 
 
 #2.c
-#totalBags = []
-#for i in range(100):
-    #newSample = GetSamplesWithoutReplacement(1000, df)
-    #baggedTrees = constructBaggedTree(newSample, 'col16', 0, 'IG', 500)
-    #totalBags.append(baggedTrees)
+# totalBags = []
+# for i in range(100):
+#     newSample = GetSamplesWithoutReplacement(1000, df)
+#     baggedTrees = constructBaggedTree(newSample, 'col16', 0, 'IG', 100)
+#     totalBags.append(baggedTrees)
+
 
 
 #2.d
 randomForest = constructRandomForestTree(df, 'col16', 0, 'IG', 10)
 
-x, y = testTrees(baggedTrees, df, 'col16')
+x, y = testTrees(randomForest, df, 'col16')
 plt.plot(x, y)
 # naming the x axis
 plt.xlabel('Iteration')
@@ -1310,7 +1311,7 @@ plt.title('Bagged Trees Individual')
 plt.show()
 
 
-x, y = testGroupDecision(baggedTrees,df,'col16')
+x, y = testGroupDecision(randomForest,df,'col16')
 plt.plot(x, y)
 # naming the x axis
 plt.xlabel('Iteration')
