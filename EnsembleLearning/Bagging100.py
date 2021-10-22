@@ -15,8 +15,8 @@ import Bagging
 
 
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
-dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
+df = pd.read_csv("bank/train.csv", header=None)
+dfTest = pd.read_csv("bank/test.csv", header=None)
 
 df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
