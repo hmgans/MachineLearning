@@ -91,6 +91,9 @@ def find_linear_regression_stoch(df, w, r, t, t_limit, target):
     #example = df.iloc[0]
     temp = []
 
+    cost = costFunction(w, df, target)
+    print(str(cost))
+
     for i in range(len(w)):
         temp.append(w[i])
 
@@ -99,7 +102,14 @@ def find_linear_regression_stoch(df, w, r, t, t_limit, target):
     for i in range(len(w)):
         temp[i] = w[i] + r*(getResult(w, example,df.keys()[i], target))
 
+    if hasConverged(temp, w):
+        return temp
     w = temp
+    
+
+
+
+    
 
     return find_linear_regression_batch(df, w, r, t+1,t_limit, target)
 
@@ -189,6 +199,29 @@ def stochasticGradientDescent(df, r, t_limit):
 
     return 0
 
+def costFunction(w, df, target):
+
+    total = 0
+    for index, row in df.iterrows():
+        
+        keys = df.keys()
+        estimate = 0
+        # Calculate wTx
+        for j in range(len(df.keys())-1):
+            estimate += row[keys[j]]*w[j]
+        #(y - est)
+        result = row[target] - estimate
+        total += math.pow(result,2)
+    return total/2
+
+def hasConverged(w, prevW):
+
+    result = np.linalg(w-prevW)
+
+    if result < .00001:
+        return True
+    return False
+    
 
 
 df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/LinearRegression/tester.csv", header=None)

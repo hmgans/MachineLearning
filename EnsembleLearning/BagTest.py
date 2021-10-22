@@ -18,17 +18,22 @@ dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 
-baggedTrees = Bagging.constructBaggedTree(df, 'col16', 1, 'IG', 100)
+baggedTrees = Bagging.constructBaggedTree(df, 'col16', 2, 'IG', 500)
 
 
 #Results against Test
 x, y = Bagging.testTrees(baggedTrees, dfTest, 'col16')
-print("Iteration for Individual Bagged Trees on Test")
-for i in range(len(x)):
-    print(str(x[i]))
-print("Error ")
-for i in range(len(y)):
-    print(str(y[i]))
+plt.plot(x, y)
+# naming the x axis
+plt.xlabel('Iteration')
+# naming the y axis
+plt.ylabel('Error')
+ 
+# giving a title to my graph
+plt.title('Bagged Trees Individual on Test')
+# function to show the plot
+plt.show()
+
 
 
 x, y = Bagging.testGroupDecision(baggedTrees, dfTest, 'col16')

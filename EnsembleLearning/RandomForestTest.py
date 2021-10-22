@@ -19,16 +19,21 @@ dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 #2.d
-randomForest = Bagging.constructRandomForestTree(df, 'col16', 1, 'IG', 100)
+randomForest = Bagging.constructRandomForestTree(df, 'col16', 2, 'IG', 500)
 
 #Results against Test
 x, y = Bagging.testTrees(randomForest, dfTest, 'col16')
-print("Iteration for Individual Random Forest Trees on Test")
-for i in range(len(x)):
-    print(str(x[i]))
-print("Error ")
-for i in range(len(y)):
-    print(str(y[i]))
+plt.plot(x, y)
+# naming the x axis
+plt.xlabel('Iteration')
+# naming the y axis
+plt.ylabel('Error')
+ 
+# giving a title to my graph
+plt.title('Bagged Trees Individual on Test')
+# function to show the plot
+plt.show()
+
 
 x, y = Bagging.testGroupDecision(randomForest, dfTest, 'col16')
 print("Iteration for Group Random Forest Trees on Test")
