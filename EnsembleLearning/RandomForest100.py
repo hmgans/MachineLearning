@@ -19,7 +19,7 @@ dfTest = pd.read_csv("bank/test.csv", header=None)
 df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
-Amount = 100
+Amount = 50
 numberInBag = 5
 
 totalBags = []
