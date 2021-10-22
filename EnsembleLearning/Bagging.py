@@ -1310,6 +1310,7 @@ def GetSamplesWithoutReplacement(total, data):
         choice = random.randint(0, len(data)-1) # Get random index
         newDataFrame.loc[len(newDataFrame.index)] = data.iloc[choice]
         data = data.drop(index=choice)# remove the row afterwards
+        data = data.reset_index(drop=True)
 
 
     return newDataFrame
