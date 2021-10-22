@@ -19,19 +19,19 @@ baggedTrees = Bagging.constructBaggedTree(Train, 'col16', 3, 'IG', 1)
 x, y = Bagging.testTrees(baggedTrees, Test, 'col16')
 print("Iteration for Individual Bagged Trees on Test Extra Credit")
 for i in range(len(x)):
-    print(str(x))
+    print(str(x[i]))
 print("Error ")
 for i in range(len(y)):
-    print(str(y))
+    print(str(y[i]))
 
 
 x, y = Bagging.testGroupDecision(baggedTrees, Test, 'col16')
 print("Iteration for Individual Bagged Trees on Test Extra Credit")
 for i in range(len(x)):
-    print(str(x))
+    print(str(x[i]))
 print("Error ")
 for i in range(len(y)):
-    print(str(y))
+    print(str(y[i]))
 
 
 

@@ -19,17 +19,17 @@ randomForest = Bagging.constructRandomForestTree(df, 'col16', 3, 'IG', 1)
 x, y = Bagging.testTrees(randomForest, Test, 'col16')
 print("Iteration for Individual Random Forest Trees on Test Extra Credit")
 for i in range(len(x)):
-    print(str(x))
+    print(str(x[i]))
 print("Error ")
 for i in range(len(y)):
-    print(str(y))
+    print(str(y[i]))
 
 
 x, y = Bagging.testGroupDecision(randomForest, Test, 'col16')
 print("Iteration for Individual Random Forest Trees on Test Extra Credit")
 for i in range(len(x)):
-    print(str(x))
+    print(str(x[i]))
 print("Error ")
 for i in range(len(y)):
-    print(str(y))
+    print(str(y[i]))
 
