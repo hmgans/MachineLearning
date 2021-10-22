@@ -20,12 +20,12 @@ df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 Amount = 100
-numberInBag = 100
+numberInBag = 5
 
 totalBags = []
 for i in range(Amount):
     newSample = Bagging.GetSamplesWithoutReplacement(1000, df)
-    RandomForest = Bagging.constructRandomForestTree(newSample, 'col16', 0, 'IG', numberInBag)
+    RandomForest = Bagging.constructRandomForestTree(newSample, 'col16', 2, 'IG', numberInBag)
     totalBags.append(RandomForest)
 
 

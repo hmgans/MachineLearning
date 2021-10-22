@@ -19,13 +19,13 @@ dfTest = pd.read_csv("bank/test.csv", header=None)
 df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
-Amount = 100
+Amount = 2
 numberInBag = 100
 
 totalBags = []
 for i in range(Amount):
     newSample = Bagging.GetSamplesWithoutReplacement(1000, df)
-    baggedTrees = Bagging.constructBaggedTree(newSample, 'col16', 0, 'IG', numberInBag)
+    baggedTrees = Bagging.constructBaggedTree(newSample, 'col16', 2, 'IG', numberInBag)
     totalBags.append(baggedTrees)
 
 
