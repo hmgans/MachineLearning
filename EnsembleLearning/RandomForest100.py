@@ -20,7 +20,7 @@ df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 Amount = 100
-numberInBag = 5
+numberInBag = 100
 
 totalBags = []
 for i in range(Amount):
