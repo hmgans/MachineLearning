@@ -18,7 +18,7 @@ dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 
-baggedTrees = Bagging.constructBaggedTree(df, 'col16', 3, 'IG', 1)
+baggedTrees = Bagging.constructBaggedTree(df, 'col16', 3, 'IG', 100)
 
 
 #Results against Test

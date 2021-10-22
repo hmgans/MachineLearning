@@ -19,8 +19,8 @@ dfTest = pd.read_csv("bank/test.csv", header=None)
 df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
-Amount = 2
-numberInBag = 2
+Amount = 100
+numberInBag = 20
 
 totalBags = []
 for i in range(Amount):

@@ -15,7 +15,7 @@ df = Bagging.cleanNumbericalValues(df)
 Train, Test = Bagging.GetSamplesWithoutReplacementTrainTest(24000, df)
 
 
-baggedTrees = Bagging.constructBaggedTree(Train, 'col16', 3, 'IG', 1)
+baggedTrees = Bagging.constructBaggedTree(Train, 'col16', 3, 'IG', 100)
 x, y = Bagging.testTrees(baggedTrees, Test, 'col16')
 print("Iteration for Individual Bagged Trees on Test Extra Credit")
 for i in range(len(x)):
