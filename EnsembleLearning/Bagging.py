@@ -1131,6 +1131,86 @@ def testTrees(trees, df, testCol):
 
     return x, y
 
+def testTree(tree, df, testCol):
+
+    array =[]
+    for i in range(len(df)):
+        line = pd.Series(df.iloc[i])
+        insideArray = []
+        insideArray.append(find_result(line, tree)) # contruct a prediction column
+
+        array.append(insideArray)
+
+    newCheckArray = pd.DataFrame(np.array(array))
+
+    df['results'] = newCheckArray
+    df['realvalue'] = df[testCol]
+
+    err = len(df[testCol][df[testCol] != df['results']])
+
+    return err
+
+
+def find_result_lamb(row):
+    if row['col16'] == 'yes':
+        return math.pow(1 - row['mean'],2)
+    else:
+        return math.pow(0 - row['mean'],2)
+        
+    
+
+def findVariance( df, mean):
+
+    newCol = []
+    for i in range(len(df)):
+        meanHolder = []
+        meanHolder.append(mean)
+        newCol.append(meanHolder)
+
+    meanCol = pd.DataFrame(np.array(newCol))
+    df['mean'] = meanCol
+    df['variance']= df.apply (lambda row: find_result_lamb(row), axis=1)
+
+
+    return df['variance'].sum()/(len(df)-1)
+
+def testGroupMean(trees, df, testCol):
+    array =[]
+
+    for i in range(len(df)):
+
+        line = pd.Series(df.iloc[i])
+        insideArray = []
+
+        suggestions = {}
+        for j in range(len(trees)):
+
+            result = find_result(line, trees[j])
+            if result in suggestions:
+                suggestions[result] += 1
+            else:
+                suggestions[result] = 1
+        
+        max = -1
+        winner = ""
+        for key in suggestions.keys():
+            if suggestions[key] > max:
+                winner = key
+                max = suggestions[key]
+        insideArray.append(winner)
+        
+        array.append(insideArray)
+
+
+    newCheckArray = pd.DataFrame(np.array(array))
+
+    df['results'] = newCheckArray
+    df['realvalue'] = df[testCol]
+
+    err = len(df[testCol][df[testCol] != df['results']])
+        
+    return err/len(df)
+
 def testEnsemble(trees, df, testCol, alpha):
 
     array = []
@@ -1237,8 +1317,6 @@ def GetSamplesWithoutReplacement(total, data):
 # df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
 # dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
 
-# #test = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
-
 # df = cleanNumbericalValues(df)
 # dfTest = cleanNumbericalValues(dfTest)
 
@@ -1306,7 +1384,7 @@ def GetSamplesWithoutReplacement(total, data):
 
 
 
-# #Results against test
+# # Results against test
 # # testTrees(baggedTrees, dfTest, 'col16')
 # # testGroupDecision(baggedTrees,dfTest,'col16')
 
