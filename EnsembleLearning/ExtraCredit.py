@@ -7,12 +7,33 @@ import matplotlib.pyplot as plt
 from pandas.core.frame import DataFrame
 import Bagging
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/default_of_credit_card_clients.csv", header=None)
+df = pd.read_csv("default_of_credit_card_clients.csv", header=None)
 
 
 df = Bagging.cleanNumbericalValues(df)
 
 Train, Test = Bagging.GetSamplesWithoutReplacementTrainTest(24000, df)
-baggedTrees = Bagging.constructBaggedTree(df, 'col16', 3, 'IG', 500)
+
+
+baggedTrees = Bagging.constructBaggedTree(Train, 'col16', 3, 'IG', 1)
+x, y = Bagging.testTrees(baggedTrees, Test, 'col16')
+print("Iteration for Individual Bagged Trees on Test Extra Credit")
+for i in range(len(x)):
+    print(str(x))
+print("Error ")
+for i in range(len(y)):
+    print(str(y))
+
+
+x, y = Bagging.testGroupDecision(baggedTrees, Test, 'col16')
+print("Iteration for Individual Bagged Trees on Test Extra Credit")
+for i in range(len(x)):
+    print(str(x))
+print("Error ")
+for i in range(len(y)):
+    print(str(y))
+
+
+
 
 

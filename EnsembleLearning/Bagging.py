@@ -1309,7 +1309,7 @@ def GetSamplesWithoutReplacement(total, data):
     for i in range(total):
         choice = random.randint(0, len(data)-1) # Get random index
         newDataFrame.loc[len(newDataFrame.index)] = data.iloc[choice]
-        data.drop(index=choice)# remove the row afterwards
+        data = data.drop(index=choice)# remove the row afterwards
 
 
     return newDataFrame
@@ -1318,15 +1318,20 @@ def GetSamplesWithoutReplacementTrainTest(total, data):
 
     newDataFrame = pd.DataFrame(columns=data.columns)
 
+    
     for i in range(total):
         choice = random.randint(0, len(data)-1) # Get random index
         newDataFrame.loc[len(newDataFrame.index)] = data.iloc[choice]
-        data.drop(index=choice)# remove the row afterwards
+        data = data.drop(index=choice)# remove the row afterwards
+        data = data.reset_index(drop=True)
 
 
     return newDataFrame, data
 
-# df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
+df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
+Train, Test = GetSamplesWithoutReplacementTrainTest(1000, df)
+print('here')
+
 # dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
 
 # df = cleanNumbericalValues(df)

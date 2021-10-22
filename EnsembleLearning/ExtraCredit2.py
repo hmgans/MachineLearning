@@ -1,30 +1,23 @@
-
 import math
 import pandas as pd
 import numpy as np
 from random import randrange
 import random
 import matplotlib.pyplot as plt
-
 from pandas.core.frame import DataFrame
-
 import Bagging
 
-df = pd.read_csv("bank/train.csv", header=None)
-dfTest = pd.read_csv("bank/test.csv", header=None)
+df = pd.read_csv("default_of_credit_card_clients.csv", header=None)
 
 
 df = Bagging.cleanNumbericalValues(df)
-dfTest = Bagging.cleanNumbericalValues(dfTest)
+
+Train, Test = Bagging.GetSamplesWithoutReplacementTrainTest(24000, df)
 
 
-
-
-#2.d
 randomForest = Bagging.constructRandomForestTree(df, 'col16', 3, 'IG', 1)
-
-x, y = Bagging.testTrees(randomForest, df, 'col16')
-print("Iteration for Individual Random Forest Trees on Train")
+x, y = Bagging.testTrees(randomForest, Test, 'col16')
+print("Iteration for Individual Random Forest Trees on Test Extra Credit")
 for i in range(len(x)):
     print(str(x))
 print("Error ")
@@ -32,10 +25,11 @@ for i in range(len(y)):
     print(str(y))
 
 
-x, y = Bagging.testGroupDecision(randomForest, df, 'col16')
-print("Iteration for Group Random Forest Trees on Train")
+x, y = Bagging.testGroupDecision(randomForest, Test, 'col16')
+print("Iteration for Individual Random Forest Trees on Test Extra Credit")
 for i in range(len(x)):
     print(str(x))
 print("Error ")
 for i in range(len(y)):
     print(str(y))
+

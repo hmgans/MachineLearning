@@ -19,8 +19,8 @@ dfTest = pd.read_csv("bank/test.csv", header=None)
 df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
-Amount = 100
-numberInBag = 20
+Amount = 2
+numberInBag = 2
 
 totalBags = []
 for i in range(Amount):
@@ -72,4 +72,5 @@ for j in range(Amount):
 for i in range(len(groupBias)):
     print("Tree Ensemble at " + str(i)+ " bias:" + str(groupBias[i]))
     print("Tree Ensemble at " + str(i)+ " variance:" + str(groupVariance[i]))
+    print("Squared: " + str(groupBias[i]+groupVariance[i]))
 
