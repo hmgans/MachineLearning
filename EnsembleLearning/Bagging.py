@@ -1328,9 +1328,9 @@ def GetSamplesWithoutReplacementTrainTest(total, data):
 
     return newDataFrame, data
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
-Train, Test = GetSamplesWithoutReplacementTrainTest(1000, df)
-print('here')
+# df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/train.csv", header=None)
+# Train, Test = GetSamplesWithoutReplacementTrainTest(1000, df)
+# print('here')
 
 # dfTest = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning/bank/test.csv", header=None)
 
