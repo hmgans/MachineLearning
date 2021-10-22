@@ -57,6 +57,8 @@ for i in range(numberInBag):
 for i in range(len(biasTerms)):
     print("Tree at " + str(i)+ " bias: " + str(biasTerms[i]))
     print("Tree at " + str(i)+ " variance: " + str(varianceTerms[i]))
+    print("Squared: " + str(biasTerms[i]+varianceTerms[i]))
+    
 
 
 groupBias = []
