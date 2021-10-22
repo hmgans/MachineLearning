@@ -19,7 +19,7 @@ dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 #2.d
-randomForest = Bagging.constructRandomForestTree(df, 'col16', 3, 'IG', 100)
+randomForest = Bagging.constructRandomForestTree(df, 'col16', 1, 'IG', 100)
 
 #Results against Test
 x, y = Bagging.testTrees(randomForest, dfTest, 'col16')

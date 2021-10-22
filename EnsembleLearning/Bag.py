@@ -18,7 +18,7 @@ dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 
-baggedTrees = Bagging.constructBaggedTree(df, 'col16', 3, 'IG', 100)
+baggedTrees = Bagging.constructBaggedTree(df, 'col16', 1, 'IG', 100)
 
 x, y = Bagging.testTrees(baggedTrees, df, 'col16')
 print("Iteration for Individual Bagged Trees on Train")

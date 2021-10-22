@@ -21,7 +21,7 @@ dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 
 #2.d
-randomForest = Bagging.constructRandomForestTree(df, 'col16', 3, 'IG', 100)
+randomForest = Bagging.constructRandomForestTree(df, 'col16', 1, 'IG', 100)
 
 x, y = Bagging.testTrees(randomForest, df, 'col16')
 print("Iteration for Individual Random Forest Trees on Train")

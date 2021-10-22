@@ -15,7 +15,7 @@ df = Bagging.cleanNumbericalValues(df)
 Train, Test = Bagging.GetSamplesWithoutReplacementTrainTest(24000, df)
 
 
-randomForest = Bagging.constructRandomForestTree(df, 'col16', 3, 'IG', 100)
+randomForest = Bagging.constructRandomForestTree(df, 'col16', 0, 'IG', 100)
 x, y = Bagging.testTrees(randomForest, Test, 'col16')
 print("Iteration for Individual Random Forest Trees on Test Extra Credit")
 for i in range(len(x)):

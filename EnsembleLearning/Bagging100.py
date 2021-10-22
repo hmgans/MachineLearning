@@ -20,12 +20,12 @@ df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
 Amount = 100
-numberInBag = 20
+numberInBag = 5
 
 totalBags = []
 for i in range(Amount):
     newSample = Bagging.GetSamplesWithoutReplacement(1000, df)
-    baggedTrees = Bagging.constructBaggedTree(newSample, 'col16', 3, 'IG', numberInBag)
+    baggedTrees = Bagging.constructBaggedTree(newSample, 'col16', 0, 'IG', numberInBag)
     totalBags.append(baggedTrees)
 
 
