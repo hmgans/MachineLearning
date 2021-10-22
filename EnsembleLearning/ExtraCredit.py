@@ -12,8 +12,7 @@ df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/EnsembleLearning
 
 df = Bagging.cleanNumbericalValues(df)
 
-Train = Bagging.GetSamplesWithoutReplacement(24000, df)
-Test = df
+Train, Test = Bagging.GetSamplesWithoutReplacementTrainTest(24000, df)
 baggedTrees = Bagging.constructBaggedTree(df, 'col16', 3, 'IG', 500)
 
 

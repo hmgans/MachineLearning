@@ -19,13 +19,13 @@ dfTest = pd.read_csv("bank/test.csv", header=None)
 df = Bagging.cleanNumbericalValues(df)
 dfTest = Bagging.cleanNumbericalValues(dfTest)
 
-Amount = 3
-numberInBag = 3
+Amount = 100
+numberInBag = 20
 
 totalBags = []
 for i in range(Amount):
     newSample = Bagging.GetSamplesWithoutReplacement(1000, df)
-    baggedTrees = Bagging.constructBaggedTree(newSample, 'col16', 2, 'IG', numberInBag)
+    baggedTrees = Bagging.constructBaggedTree(newSample, 'col16', 3, 'IG', numberInBag)
     totalBags.append(baggedTrees)
 
 
@@ -42,7 +42,7 @@ for i in range(numberInBag):
         variance = Bagging.findVariance(dfTest, error)
         treeVariance.append(variance)
 
-        treeBias = math.pow(1-error,2) # Bias
+        treeBias = math.pow(error-1,2) # Bias
         bias.append(treeBias)
     totalBias = 0
     totalVariance = 0
@@ -65,7 +65,7 @@ groupVariance = []
 for j in range(Amount):
     error =  Bagging.testGroupMean(totalBags[j], dfTest, 'col16')
     variance = Bagging.findVariance(dfTest, error)
-    treeBias =  treeBias = math.pow(1-error,2) # Bias
+    treeBias =  treeBias = math.pow(error-1,2) # Bias
     groupBias.append(treeBias)
     groupVariance.append(variance)
 
