@@ -6,7 +6,9 @@ import pandas as pd
 import numpy as np
 import random
 
+import matplotlib.pyplot as plt
 
+from pandas.core.frame import DataFrame
 
 
 
@@ -17,7 +19,7 @@ def gradientDecentMethod(df, r, t_limit):
     iter = 0
     treeCount = {}
     trees = {}
-    switchColumn = 'col3'
+    switchColumn = 'col7'
     # Add a collumn of ones for the b value
 
     columnOfOnes = []
@@ -53,72 +55,103 @@ def gradientDecentMethod(df, r, t_limit):
     for i in range(length-1):
         w.append(0)
 
-    w = [-1,1,-1,-1]
 
-    find_linear_regression_batch(data, w, r, 0, t_limit, 'col4')
-
+    wFinal, costs, iteration = find_linear_regression_batch(data, w, r, 0, t_limit, 'col8')
 
 
+    finalCost = costFunction(wFinal,data,'col8')
 
-    return 0
+
+    x, y = iteration, costs
+    plt.plot(x, y)
+    # naming the x axis
+    plt.xlabel('Iteration')
+    # naming the y axis
+    plt.ylabel('Error')
+
+    plt.title('Convergence for Batch')
+
+    plt.show()
+
+    print('Final Costs: ' + str(finalCost))
+    print('Iteration of Convergence: ' + str(iteration[len(iteration)-1]))
+    print('R value: ' + str(r))
+    print('Final w: ' + str(wFinal))
+
+    return wFinal
 
 def find_linear_regression_batch(df, w, r, t, t_limit, target):
+    costs = []
+    iteration = []
 
-    if(t == t_limit):
-        return w
+
+    while(t != t_limit):
+
+        cost = costFunction(w, df, target)
+        costs.append(cost)
+        iteration.append(t)
     
-    gradients = []
-    for key in df.keys():
-        if key == target:
-            break
-        # Get gradients for all columns
-        gradients.append(gradient(w,df,target,key))
+        gradients = []
+        for key in df.keys():
+            if key == target:
+                break
+            # Get gradients for all columns
+            gradients.append(gradient(w,df,target,key))
     
-    multiplicative = r *np.array(gradients)
-    w = np.array(w) - multiplicative
-    return find_linear_regression_batch(df, w, r, t+1,t_limit, target)
+        multiplicative = r *np.array(gradients)
+
+        temp = np.array(w) - multiplicative
+        if hasConverged(temp, w):
+            return temp, costs, iteration
+        w=temp
+
+        t += 1
+    return w, costs, iteration
 
 
 
 def find_linear_regression_stoch(df, w, r, t, t_limit, target):
+    costs = []
+    iteration = []
 
-    if(t == t_limit):
-        return w
+    while(t != t_limit):
 
-    #Randomly sample a training example
-    choice = random.randint(0, len(df)-1) # Get random index
-    example = df.iloc[choice]
-    #example = df.iloc[0]
-    temp = []
-
-    cost = costFunction(w, df, target)
-    print(str(cost))
-
-    for i in range(len(w)):
-        temp.append(w[i])
+        cost = costFunction(w, df, target)
+        costs.append(cost)
+        iteration.append(t)
 
 
 
-    for i in range(len(w)):
-        temp[i] = w[i] + r*(getResult(w, example,df.keys()[i], target))
+        #Randomly sample a training example
+        choice = random.randint(0, len(df)-1) # Get random index
+        example = df.iloc[choice]
+        #example = df.iloc[0]
+        temp = []
 
-    if hasConverged(temp, w):
-        return temp
-    w = temp
-    
+        cost = costFunction(w, df, target)
+
+        for i in range(len(w)):
+            temp.append(w[i])
 
 
 
-    
+        for i in range(len(w)):
+            temp[i] = w[i] + r*(getResult(w, example,df.keys()[i], target))
 
-    return find_linear_regression_batch(df, w, r, t+1,t_limit, target)
+        if hasConverged(temp, w):
+            return temp, costs, iteration
+        w = temp
+        t += 1
+
+    return w, costs, iteration
 
 
 
 def getResult(w, row, key, target):
+    keys = df.keys()
     result = 0
     for j in range(len(df.keys())-1):
-         result += row[key]*w[j]
+         result += row[keys[j]]*w[j]
         #(y - est)
     result = row[target] - result
     result *= row[key]
@@ -144,20 +177,13 @@ def gradient(w, df, target, column):
     
     return -total
 
-        
-
-
-
-
-    return 0
-
 
 def stochasticGradientDescent(df, r, t_limit):
     labels = []
     iter = 0
     treeCount = {}
     trees = {}
-    switchColumn = 'col3'
+    switchColumn = 'col7'
     # Add a collumn of ones for the b value
 
     columnOfOnes = []
@@ -193,11 +219,30 @@ def stochasticGradientDescent(df, r, t_limit):
     for i in range(length-1):
         w.append(0)
 
-    find_linear_regression_stoch(data, w, r, 0, t_limit, 'col4')
+    wFinal, costs, iteration = find_linear_regression_stoch(data, w, r, 0, t_limit, 'col8')
+
+    finalCost = costFunction(wFinal,data,'col8')
+
+
+    x, y = iteration, costs
+    plt.plot(x, y)
+    # naming the x axis
+    plt.xlabel('Iteration')
+    # naming the y axis
+    plt.ylabel('Error')
+
+    plt.title('Convergence for Stochastic')
+
+    plt.show()
+
+    print('Final Costs: ' + str(finalCost))
+    print('Iteration of Convergence: ' + str(iteration[len(iteration)-1]))
+    print('R value: ' + str(r))
+    print('Final w: ' + str(wFinal))
 
 
 
-    return 0
+    return wFinal
 
 def costFunction(w, df, target):
 
@@ -214,19 +259,138 @@ def costFunction(w, df, target):
         total += math.pow(result,2)
     return total/2
 
+
 def hasConverged(w, prevW):
 
-    result = np.linalg(w-prevW)
+    result = np.linalg.norm(np.array(w)-np.array(prevW))
 
     if result < .00001:
         return True
     return False
     
 
+def analyticalResult(df):
+    labels = []
+    iter = 0
+    treeCount = {}
+    trees = {}
+    switchColumn = 'col7'
+    # Add a collumn of ones for the b value
 
-df = pd.read_csv("/Users/hankgansert/Desktop/ML/MachineLearning/LinearRegression/tester.csv", header=None)
+    columnOfOnes = []
+    for i in range(len(df)):
+        columnOfOnes.append(1)
+        
+    # Column of ones for the B value
+
+    df['colOnes'] = columnOfOnes
+    length = df.loc[0].size
 
 
-gradientDecentMethod(df, .1, 100)
 
-stochasticGradientDescent(df, .1, 100)
+
+    for i in range(length):
+        labels.append("col" + str(i))
+
+    df.columns = labels
+
+
+
+    newCol = df[switchColumn]
+
+    data = df.drop(switchColumn, axis=1)
+
+
+
+    data[switchColumn] = newCol
+
+    data.columns = labels
+
+    Y = pd.DataFrame(data['col8'])
+    X = pd.DataFrame(data.drop('col8', axis=1))
+    Y = Y.to_numpy()
+    X = X.to_numpy()
+    X = X.T
+    # Perform the Analytical Calculation
+    w = np.linalg.inv((np.dot(X,X.T)))
+    x = np.dot(w,X)
+    y = np.dot(x,Y)
+
+
+
+
+    return y
+
+def costFunctionBeforeCleaning(w, df):
+    labels = []
+    iter = 0
+    treeCount = {}
+    trees = {}
+    switchColumn = 'col7'
+    # Add a collumn of ones for the b value
+
+    columnOfOnes = []
+    for i in range(len(df)):
+        columnOfOnes.append(1)
+        
+    # Column of ones for the B value
+
+    df['colOnes'] = columnOfOnes
+    length = df.loc[0].size
+
+
+
+
+    for i in range(length):
+        labels.append("col" + str(i))
+
+    df.columns = labels
+
+
+
+    newCol = df[switchColumn]
+
+    data = df.drop(switchColumn, axis=1)
+
+
+
+    data[switchColumn] = newCol
+
+    data.columns = labels
+    total = 0
+
+    for index, row in df.iterrows():
+        
+        keys = df.keys()
+        estimate = 0
+        # Calculate wTx
+        for j in range(len(df.keys())-1):
+            estimate += row[keys[j]]*w[j]
+        #(y - est)
+        result = row['col8'] - estimate
+        total += math.pow(result,2)
+    return total/2
+
+
+df = pd.read_csv("concrete/train.csv", header=None)
+
+test = pd.read_csv("concrete/train.csv")
+
+
+gradientW = gradientDecentMethod(df, .0078125, 500)
+
+stochasticW = stochasticGradientDescent(df, .0078125, 10000)
+
+trueResult = analyticalResult(df)
+
+print("Real Result")
+print(trueResult)
+
+print("Cost for Batch")
+print(costFunctionBeforeCleaning(gradientW, test))
+
+print("Cost for Stochastic")
+print(costFunctionBeforeCleaning(stochasticW, test))
+
+print("Cost for Real Result")
+print(costFunctionBeforeCleaning(trueResult, test))
