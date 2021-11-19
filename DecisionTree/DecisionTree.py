@@ -429,27 +429,12 @@ def cleanNumbericalValues(df):
     return df
 
 #This function with replac unknown values in the dataframe with the majority 
-def cleanUnknownValues(df):
+def clean(df):
     length = df.loc[0].size
-    labels = []
+    df = df.insert(df,length-1,1,axis=1)
 
-
-    for i in range(length):
-        labels.append("col" + str(i))
-
-    df.columns = labels
-
-
-
-    columnsWithUnknown = []
-    for key in df.keys():
-        for val in df[key].unique():
-            if val == "unknown":
-                columnsWithUnknown.append(key)
     
-    for col in columnsWithUnknown:
-        attr = get_majority_for_unknown(df, col)
-        df[col] = df[col].replace(['unknown'], attr)
+
     
     return df
 
@@ -468,6 +453,8 @@ def cleanUnknownValues(df):
 df = pd.read_csv("bank/train.csv", header=None)
 
 test = pd.read_csv("bank/train.csv", header=None)
+
+df = clean(df)
 
 df = cleanNumbericalValues(df)
 test = cleanNumbericalValues(test)
