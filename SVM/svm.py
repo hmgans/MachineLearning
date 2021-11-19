@@ -27,6 +27,13 @@ def clean(df):
     
     return df
 
+def cleanTEST(df):
+
+    length = df.loc[0].size
+    df[3] = df[3].apply(lambda x: -1 if x==0 else 1 )
+    df.insert(loc=3,column='3',value=1)
+    
+    return df
 
 
 
@@ -51,8 +58,8 @@ def SVM_TEST(df, epoch, r, C):
     for e in range(epoch):
         # Randomly Shuffle
         #df = df.sample(frac=1).reset_index(drop=True)
+        r = rs[e]
         for index, row in df.iterrows():
-            r = rs[index]
             row = np.array(row)
             y = row[-1]
             
@@ -64,9 +71,13 @@ def SVM_TEST(df, epoch, r, C):
             # Small Change Here for the SVM figure out what N is and what C should be and [w;0]
 
             if result <= 1:
-                w = (1-r)*w[:-1] + r * C * N * x
+                temp = ((1-r)*w[:-1]).tolist()
+                temp.append(0)
+                w = np.array(temp) + r * C * N * y * x
             else:
-                w = (1-r)*w[:-1]
+                temp = ((1-r)*w[:-1]).tolist()
+                temp.append(0)
+                w = np.array(temp)
             
     return w
 
@@ -92,7 +103,7 @@ def SVM_SG(df, epoch, r, C, a, problem):
         # Save weights for each epoch
         weights.append(w)
         if problem == 'a':
-            rt = r/(1+(math.pow(r,e)/a))
+            rt = r/(1+(r/a)*e)
         elif problem == 'b':
             rt = r/(1+e)
         else:
@@ -143,13 +154,30 @@ def averageErrorReg(w, df):
   
     return errortotal/total
 
-        
+def objectiveKern(a, x, y, r):
+
+
+    yNbyN = np.outer(np.array(y),np.transpose(np.array(y)))
+    aNbyN = np.outer(np.array(a),np.transpose(np.array(a)))
+
+    combo = a * y
+    cNbyN = np.outer(np.array(combo),np.transpose(np.array(combo)))
+    kernM = kernelMatrix(x, r)
+
+
+    result = .5 * np.sum(yNbyN * aNbyN * kernM) - np.sum(a)
+
+
+    return result        
 
 def objective(a, x, y):
 
 
     yNbyN = np.outer(np.array(y),np.transpose(np.array(y)))
     aNbyN = np.outer(np.array(a),np.transpose(np.array(a)))
+
+    combo = a * y
+    cNbyN = np.outer(np.array(combo),np.transpose(np.array(combo)))
     xNbyN = np.asmatrix(x)
     xNbyN = xNbyN * np.transpose(xNbyN)
 
@@ -184,12 +212,30 @@ def objectiveTrun(a, x, y):
 
 
 
+def kernelMatrix(X, r):
 
+    xNbyN = np.asmatrix(X)
+    xNbyN = xNbyN * np.transpose(xNbyN)
 
+    Xcol = np.sum(np.array(X)*np.array(X),1)
 
+    Xi = []
+    for i in range(len(X)):
+        Xi.append(Xcol)
 
+    # At this point we have ||x_i||
+    Xj = np.transpose(Xi)
+    # take the Transpose to get ||x_j||
 
+    Xi = np.array(Xi)**2
+    Xj = np.array(Xj)**2
 
+    # ||x_i - x_j|| = ||x_i||^2 + ||x_j||^2 - x_iTx_j
+    result = Xi + Xj - 2 * xNbyN
+    result = np.exp(-result/r)
+    
+
+    return result
 
 
 def SVM_DUAL(df, C):
@@ -232,6 +278,89 @@ def SVM_DUAL(df, C):
 
     return w
 
+def SVM_DUAL_KERNEL(df, C, r):
+
+    bnds = []
+    # alpha bounds to [0,C]
+    for i in range(len(df)):
+        # Is this inclusive or exclusive
+        bnds.append((0,C))
+
+    a = []
+    #initialze alphas to 0
+    for i in range(len(df)):
+        a.append(random.uniform(0, C))
+    
+
+    yArr = []
+    xArr = []
+    #Structure Data
+    for index, row in df.iterrows():
+        row = np.array(row)
+        y = row[-1]
+
+        x = np.array(row[:-1])
+
+        xArr.append(x)
+        yArr.append(y)
+
+    
+
+    cons = {'type':'eq', 'fun': lambda x: np.sum(np.array(a)*np.array(yArr))}
+    
+    
+    result = minimize(objectiveKern,x0=a, args=(xArr,yArr, r) ,method='SLSQP',constraints=cons,bounds=bnds)
+
+
+    w = [0,0,0,0,0]
+    for i in range(len(xArr)):
+        w += result.x[i]*yArr[i]* xArr[i]
+
+    return w
+
+def SVM_DUAL_KERNEL_SUPPORT(df, C, r):
+
+    bnds = []
+    # alpha bounds to [0,C]
+    for i in range(len(df)):
+        # Is this inclusive or exclusive
+        bnds.append((0,C))
+
+    a = []
+    #initialze alphas to 0
+    for i in range(len(df)):
+        a.append(random.uniform(0, C))
+    
+
+    yArr = []
+    xArr = []
+    #Structure Data
+    for index, row in df.iterrows():
+        row = np.array(row)
+        y = row[-1]
+
+        x = np.array(row[:-1])
+
+        xArr.append(x)
+        yArr.append(y)
+
+    
+
+    cons = {'type':'eq', 'fun': lambda x: np.sum(np.array(a)*np.array(yArr))}
+    
+    
+    result = minimize(objectiveKern,x0=a, args=(xArr,yArr, r) ,method='SLSQP',constraints=cons,bounds=bnds)
+
+
+    supportVectors = []
+
+    for i in range(len(xArr)):
+        vector = result.x[i]
+        if vector > .001:
+            supportVectors.append(vector)
+
+    return supportVectors
+
 def Problem1A():
     df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/train.csv", header=None)
     test = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/test.csv", header=None)
@@ -239,7 +368,7 @@ def Problem1A():
     test = clean(test)
     C = [100/873,500/873,700/873]
     for i in range(len(C)):
-        w = SVM_SG(df, 100, .001, C[i], 1, 'a')
+        w = SVM_SG(df, 100, .001, C[i], .001, 'a')
         epoch = []
         errorTrain = []
         errorTest = []
@@ -288,26 +417,91 @@ def Problem1B():
         ax.set_title('Epoch Error Rate for when C='+str(C[i]))
         plt.show()
 
+
+def Problem2A():
+    df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/train.csv", header=None)
+    test = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/test.csv", header=None)
+    df = clean(df)
+    test = clean(test)
+    C = [100/873,500/873,700/873]
+    for i in range(len(C)):
+        w = SVM_DUAL_KERNEL(df, C[i])
+        print("Error for C: "+str(C[i]))
+        print(averageErrorReg(w,df))
+        print(averageErrorReg(w,test))
+
+
+    return 0
+
+def Problem2B():
+    df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/train.csv", header=None)
+    test = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/test.csv", header=None)
+    df = clean(df)
+    test = clean(test)
+    C = [100/873,500/873,700/873]
+    r = [.1,.5,1,5,100]
+    for j in range(len(r)):
+
+        print("Learning rate: "+str(r[j]))
+        for i in range(len(C)):
+            w = SVM_DUAL_KERNEL(df, C[i], r[j])
+            print("Error for C: "+str(C[i]))
+            print(averageErrorReg(w,df))
+            print(averageErrorReg(w,test))
+
+
+    return 0
+
+def Problem2C():
+    df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/train.csv", header=None)
+    test = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/test.csv", header=None)
+    df = clean(df)
+    test = clean(test)
+    C = [100/873,500/873,700/873]
+    r = [.1,.5,1,5,100]
+    for j in range(len(r)):
+
+        print("Learning rate: "+str(r[j]))
+        for i in range(len(C)):
+            print("C : " + str(C[i]))
+            w = SVM_DUAL_KERNEL_SUPPORT(df, C[i], r[j])
+            print("Amount of Support Vector: "+str(len(w)))
+
+
+    return 0
 #df = pd.read_csv("bank-note/train.csv", header=None)
 #test = pd.read_csv("bank-note/test.csv")
 
 #This was for debugging and completing problem 5.
-#df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/tester.csv", header=None)
-#SVM_TEST(df, 3, 0, 1/3)
+df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/tester.csv", header=None)
+df = cleanTEST(df)
+SVM_TEST(df, 3, 0, 1/3)
 
 # Program Part 1.A
-Problem1A()
+#Problem1A()
 
 # Program Part 1.B
 #Problem1B()
 
-df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/train.csv", header=None)
-df = clean(df)
-#Program Part 2
-w = SVM_DUAL(df, 1/2)
-print(averageErrorReg(w,df))
 
-        
+# Program Part 2.A
+#Problem2A()
+
+# Program Part 2.B
+#Problem2B()
+
+
+# Program Part 2.C
+# Problem2C()
+#df = pd.read_csv("/Users/hankgansert/Desktop/Temp/ML/MachineLearning/SVM/bank-note/train.csv", header=None)
+#df = clean(df)
+
+#Program Part 2
+# w = SVM_DUAL(df, 1/2)
+# print(averageErrorReg(w,df))
+
+# Program part 2B
+
 
 
 
