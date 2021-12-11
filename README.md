@@ -35,5 +35,9 @@ costFunctionBeforeCleaning(vector, df)
 
 
 
+Nerual Network
 
+Run python3 neural.py
+
+This file contains a three layer neural network with back propogation
 
