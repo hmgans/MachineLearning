@@ -213,11 +213,11 @@ xTrain[name] = 0
 
 #Ensemble
 #predictionTree = DecisionClassifier.fit(xTrain, yTrain)
-#predictionTree = AdaBoost.fit(xTrain, yTrain)
+predictionTree = AdaBoost.fit(xTrain, yTrain)
 #predictionTree = RandomForest.fit(xTrain, yTrain)
 
 #NN
-predictionTree = BackPropNN.fit(xTrain, yTrain)
+#predictionTree = BackPropNN.fit(xTrain, yTrain)
 
 #SVM
 #predictionTree = SVM.fit(xTrain, yTrain)
@@ -248,7 +248,6 @@ for i in range(len(results)):
 
 
 
-print('poop')
 
 
 
